@@ -1,101 +1,176 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <!-- Stylesheets-->
-        <link rel="stylesheet" type="text/css" href="style.css" />
-        <!--Google Fonts-->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
-        <title>BMI Calculator</title>
-    </head>
-    <body>
-        <h1>
-            <u>BMI Calculator using Flask</u>
-        </h1>
-        <br>
-        <!--Calculator starts-->
-        <div class="container text-center">
-            <div class="row">
-                <div class="col-sm">
-                    <form id="bmi-form">
-                        <label for="height" id="ht">Height</label>
-                        <input type="text" name="height" class="u-full-width" placeholder="Height (in cm)" id="height" />
-                        <br>
-                        <label for="weight" id="wt">Weight</label>
-                        <input type="text" name="weight" class="u-full-width" placeholder="Weight (in kg)" id="weight" />
-                        <br>
-                        <br>
-                        <input type="submit" value="Calculate" id="calc_btn" />
-                        <div id="result" class="alert"></div>
-                    </form>
-                </div>
-            </div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
+
+    <title>BMI Calculator</title>
+
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: #f5f5f5;
+        }
+
+        #result {
+            margin-top: 15px;
+            padding: 10px;
+            font-size: 18px;
+        }
+
+        .normal {
+            color: green;
+        }
+
+        .over {
+            color: orange;
+        }
+
+        .under {
+            color: blue;
+        }
+
+        .obese {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1 class="text-center mt-4">
+    <u>BMI Calculator using Flask</u>
+</h1>
+
+<br>
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col-sm">
+
+            <form id="bmi-form">
+
+                <label for="height">Height</label>
+                <input type="text" name="height"
+                       class="form-control"
+                       placeholder="Height (in cm)"
+                       id="height"/>
+
+                <br>
+
+                <label for="weight">Weight</label>
+                <input type="text" name="weight"
+                       class="form-control"
+                       placeholder="Weight (in kg)"
+                       id="weight"/>
+
+                <br>
+
+                <input type="submit"
+                       value="Calculate"
+                       class="btn btn-primary"/>
+
+                <div id="result" class="alert"></div>
+
+            </form>
+
         </div>
-        <!--Calculator ends-->
-        <hr>
-        <!--BMI values chart-->
-        <div class="container text-center">
-            <div class="row">
-                <div class="col-sm">
-                    <h2>
-                        <u>BMI Chart</u>
-                    </h2>
-                    <br>
-                    <table>
-                        <tr>
-                            <th>BMI Value</th>
-                            <th>Category</th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <18.5 </td>
-                            <td>Underweight (skinny bitch!!!!!)</td>
-                        </tr>
-                        <tr>
-                            <td>18.5 - 24.9</td>
-                            <td>Normal weight</td>
-                        </tr>
-                        <tr>
-                            <td>25 - 29.9</td>
-                            <td>Overweight</td>
-                        </tr>
-                        <tr>
-                            <td>>=30</td>
-                            <td>Obesity</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </body>
-    <script>
-        document.getElementById('bmi-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const height = document.getElementById('height').value;
-            const weight = document.getElementById('weight').value;
-            fetch('/api/bmi', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                body: `height=${encodeURIComponent(height)}&weight=${encodeURIComponent(weight)}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                const resultDiv = document.getElementById('result');
-                if (data.bmi !== undefined) {
-                    resultDiv.innerHTML = `<p>Your BMI is ${data.bmi}</p>`;
-                } else {
-                    resultDiv.innerHTML = `<p>${data.error}</p>`;
-                }
-            })
-            .catch(error => {
-                document.getElementById('result').innerHTML = '<p>An error occurred.</p>';
-            });
-        });
-    </script>
+    </div>
+</div>
+
+<hr>
+
+<div class="container text-center">
+    <h2><u>BMI Chart</u></h2>
+    <br>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>BMI Value</th>
+            <th>Category</th>
+        </tr>
+        <tr>
+            <td>&lt; 18.5</td>
+            <td>Underweight</td>
+        </tr>
+        <tr>
+            <td>18.5 - 24.9</td>
+            <td>Normal weight</td>
+        </tr>
+        <tr>
+            <td>25 - 29.9</td>
+            <td>Overweight</td>
+        </tr>
+        <tr>
+            <td>&gt;= 30</td>
+            <td>Obesity</td>
+        </tr>
+    </table>
+</div>
+
+</body>
+
+<script>
+function getCategory(bmi) {
+    if (bmi < 18.5) return ["Underweight", "under"];
+    if (bmi < 25) return ["Normal weight", "normal"];
+    if (bmi < 30) return ["Overweight", "over"];
+    return ["Obesity", "obese"];
+}
+
+document.getElementById('bmi-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const height = document.getElementById('height').value;
+    const weight = document.getElementById('weight').value;
+
+    if (!height || !weight) {
+        document.getElementById('result').innerHTML =
+            "<p>Please enter both height and weight.</p>";
+        return;
+    }
+
+    fetch('/api/bmi', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `height=${encodeURIComponent(height)}&weight=${encodeURIComponent(weight)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        const resultDiv = document.getElementById('result');
+
+        if (data.bmi !== undefined) {
+
+            const [category, css] = getCategory(data.bmi);
+
+            resultDiv.innerHTML = `
+                <p><strong>Your BMI:</strong> ${data.bmi}</p>
+                <p class="${css}">
+                    <strong>Category:</strong> ${category}
+                </p>
+            `;
+
+        } else {
+            resultDiv.innerHTML = `<p>${data.error}</p>`;
+        }
+
+    })
+    .catch(error => {
+        document.getElementById('result').innerHTML =
+            '<p>An error occurred.</p>';
+    });
+});
+</script>
+
 </html>

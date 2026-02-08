@@ -79,7 +79,7 @@
             e.preventDefault();
             const height = document.getElementById('height').value;
             const weight = document.getElementById('weight').value;
-            fetch('/bmi', {
+            fetch('/api/bmi', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 body: `height=${encodeURIComponent(height)}&weight=${encodeURIComponent(weight)}`

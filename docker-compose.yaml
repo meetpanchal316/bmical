@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  backend:
+    image: bmicalbackend:v1
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    container_name: backend_for_bmical
+  frontend:
+    image: bmicalfrontend:v1
+    depends_on:
+      - backend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    container_name: frontend_for_bmical
+    

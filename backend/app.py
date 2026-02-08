@@ -4,7 +4,7 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 # Route for BMI calculation result
-@app.route("/bmi", methods=["POST"])
+@app.route("/api/bmi", methods=["POST"])
 def calculate():
     try:
         w = float(request.form.get("weight"))
